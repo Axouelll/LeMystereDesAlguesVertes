@@ -1,0 +1,780 @@
+/* =========================================
+   1. STYLES GLOBAUX
+   ========================================= */
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+  margin: 0; 
+  padding: 0; 
+  padding-top: 60px; 
+  height: 100vh;
+  
+  /* REMPLACEMENT PAR BITTER */
+  font-family: Helvetica;
+  
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* =========================================
+   2. NAVIGATION & MENU BURGER
+   ========================================= */
+
+/* --- BARRE DE NAVIGATION (NOIR OPAQUE) --- */
+nav {
+    height: 60px;
+    width: 100%;
+    background-color: #000000; /* Noir solide */
+    border-bottom: 1px solid #222;
+    padding: 0 20px; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    z-index: 3000; /* Toujours au-dessus de tout */
+    display: flex;
+    align-items: center; 
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-logo {
+    /* Mise à jour Font */
+    font-size: 1.2em;
+    font-weight: 800; /* Plus gras pour l'impact */
+    color: #ffffff; 
+    text-decoration: none;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+/* Survol Logo : Rose */
+.nav-logo:hover { color: #E846b2; }
+
+/* --- BOUTON BURGER --- */
+.burger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40px;  
+    height: 40px; 
+    margin-right: 5px; 
+    z-index: 3001;      
+    position: relative; 
+    transition: transform 0.3s ease-in-out;
+}
+
+.burger-btn span {
+    display: block;
+    width: 100%;
+    height: 3px; 
+    background-color: #ffffff; 
+    border-radius: 2px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform-origin: center; 
+}
+
+/* Animation Survol */
+.burger-btn:hover span:nth-child(1) { transform: translateY(-2px); }
+.burger-btn:hover span:nth-child(3) { transform: translateY(2px); }
+/* Couleur Survol : Rose */
+.burger-btn:hover span { background-color: #E846b2; }
+
+/* Animation Active (Ouvert - Rotation simple) */
+.burger-btn.active { transform: rotate(90deg); }
+
+/* --- MENU DÉROULANT (PANNEAU LATÉRAL) --- */
+#burger-menu {
+    position: fixed; 
+    /* Commence juste sous le header */
+    top: 60px; 
+    left: 0;
+    width: 350px; 
+    height: calc(100vh - 60px); 
+    
+    background-color: #000000; /* Noir solide */
+    
+    box-shadow: 4px 0 15px rgba(0,0,0,0.5);
+    padding-top: 20px; 
+    display: flex;
+    flex-direction: column;
+    z-index: 2000; 
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out;
+}
+#burger-menu.active { transform: translateX(0); }
+
+#burger-menu a {
+    text-decoration: none;
+    color: #f4f4f4; 
+
+    font-size: 1.4em;
+    font-weight: 500; 
+    padding: 20px 40px; 
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+/* Survol Liens : Rose */
+#burger-menu a:hover {
+    background-color: #111; 
+    color: #E846b2; 
+    padding-left: 50px; 
+}
+
+/* --- VOILE (OVERLAY FLOU) --- */
+#menu-overlay {
+    display: none; 
+    position: fixed;
+    top: 60px; 
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    
+    /* Fond légèrement teinté + Flou */
+    background: rgba(0, 0, 0, 0.2); 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+    
+    z-index: 1400; 
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+#menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* =========================================
+   3. PAGE D'ACCUEIL (HOME)
+   ========================================= */
+body.page-home {
+    /* Image 1 : Fond global */
+    background-image: url('image/main/1.png'); 
+    background-size: cover; 
+    /* L'image de fond commence en haut */
+    background-position: center top; 
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    overflow: hidden; 
+}
+
+/* Image 2 : L'Algue (GAUCHE, BAS) */
+.algae-decor {
+    position: fixed; 
+    left: 0;        
+    bottom: 0;      
+    max-height: 85vh; 
+    width: auto;
+    z-index: 1;     
+    pointer-events: none; 
+}
+
+#home-grid {
+    position: relative; 
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: calc(100vh - 60px); 
+    padding: 40px; 
+    width: 100%;
+    box-sizing: border-box;       
+}
+
+.quadrant {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.q-top-right {
+    align-items: flex-end; 
+    text-align: right;
+    justify-content: flex-start; 
+    padding-top: 40px;
+}
+
+.q-bottom-left {
+    align-items: flex-start; 
+    justify-content: flex-end; 
+    padding-bottom: 40px;
+    z-index: 10; 
+}
+
+/* Typographie Titre Accueil */
+.main-title {
+    margin: 0;
+    line-height: 1.1; /* Un peu plus d'espace pour Bitter */
+    color: #ffffff; 
+}
+
+/* On garde les noms de classe mais on applique Bitter */
+.font-valnera-medium {
+    font-family: "Bitter", serif;
+    font-weight: 700; /* Gras */
+    font-style: normal;
+    display: block;
+    font-size: 3rem;
+}
+
+.font-valnera-italic {
+    font-family: "Bitter", serif;
+    font-weight: 800; /* Extra Gras */
+    font-style: italic; 
+    display: block;
+    font-size: 5rem; 
+    text-transform: uppercase;
+    margin-top: 5px;
+    letter-spacing: -2px; /* Bitter est un peu large, on resserre pour l'effet titre */
+}
+
+/* Boutons Accueil */
+.button-group {
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;     
+    gap: 15px;           
+    align-items: center;
+}
+
+.btn-action {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 50px; 
+    border: 2px solid #000; 
+    transition: all 0.3s ease;
+    min-width: 160px; 
+}
+
+.btn-white {
+    background-color: #fff;
+    color: #000;
+}
+.btn-white:hover {
+    background-color: #000;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-black {
+    background-color: #000;
+    color: #fff;
+}
+.btn-black:hover {
+    background-color: #000;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Responsive Accueil */
+@media (max-width: 768px) {
+    #home-grid {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        height: auto;
+        min-height: calc(100vh - 60px);
+    }
+    .q-top-right {
+        order: 1; align-items: center; text-align: center; margin-bottom: 30px;
+    }
+    .q-bottom-left {
+        order: 2; align-items: center; justify-content: flex-end; flex-grow: 1;
+        width: 100%;
+        padding-bottom: 60px; 
+    }
+    .font-valnera-medium { font-size: 2rem; }
+    .font-valnera-italic { font-size: 3rem; }
+    .button-group { flex-direction: column; width: 100%; }
+    .btn-action { width: 100%; }
+    .algae-decor { left: -50px; opacity: 0.5; max-height: 40vh; }
+}
+
+/* =========================================
+   4. PAGE ARTICLES
+   ========================================= */
+body.page-articles {
+    background-color: #5840ff; /* Bleu demandé */
+    color: #000000; /* Texte noir demandé */
+    overflow-y: auto;
+}
+
+#article-container {
+    max-width: 1200px; margin: 20px auto; padding: 20px;
+}
+
+/* Titre principal et liseré */
+#article-container h2 {
+    font-size: 2em; 
+    color: #ffffff; /* Rose demandé */
+    border-bottom: 2px solid #ffffff; /* Liseré Rose */
+    padding-bottom: 5px; 
+    display: inline-block;
+}
+
+/* Paragraphe d'intro */
+#article-container p {
+    font-size: 1.1em; 
+    color: #ffffff; /* Noir demandé */
+    font-weight: 600; /* Gras pour lisibilité sur le bleu */
+    margin-bottom: 30px;
+}
+
+/* Grille */
+#article-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; 
+}
+
+/* Cartes */
+.article-card {
+    display: block; 
+    background-color: #ffffff; /* Fond blanc pour contraste du texte noir */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    overflow: hidden; 
+    text-decoration: none; 
+    color: inherit; 
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    border: 4px solid transparent;
+}
+
+.article-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-color: #Ff92d2;
+}
+
+.card-image {
+    height: 200px; background-size: cover; background-position: center; border-bottom: 1px solid #eee;
+}
+
+.card-content { padding: 15px 20px; }
+
+/* Titre de l'article */
+.card-content h3 {
+    margin-top: 0; margin-bottom: 10px; font-size: 1.2em;
+    color: #000000; /* Noir */
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-meta {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 10px;                  
+}
+
+/* Source en Rose */
+.card-source {
+    font-size: 0.9em; 
+    font-weight: bold; 
+    color: #E846b2; /* Rose */
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Badge Année : Fond Noir / Texte Rose (Inversion pour style) */
+.card-year {
+    display: inline-block; 
+    padding: 4px 12px; 
+    background-color: #000000; /* Fond Noir */
+    color: #ffffff;            /* Texte Rose */
+    font-size: 0.8em; 
+    font-weight: bold; 
+    border-radius: 12px;       
+    line-height: 1; 
+    flex-shrink: 0;            
+}
+
+
+/* =========================================
+   5. PAGE DATA (CARTE & STATS)
+   ========================================= */
+/* Verrouille le scroll global si on est sur la page data */
+html:has(body > #app-container) {
+    overflow: hidden;
+}
+
+#app-container { 
+    display: flex; 
+    flex-direction: row; 
+    width: 100%; 
+    height: calc(100vh - 60px); 
+    overflow: hidden; 
+}
+
+#sidebar {
+    flex-grow: 0; 
+    flex-shrink: 0; 
+    flex-basis: 33.33%; 
+    min-width: 250px; 
+    max-width: 60%; 
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+    padding: 0; 
+    box-sizing: border-box; 
+    background: #f9f9f9; 
+    position: relative; 
+    z-index: 10;
+}
+
+#sidebar-header {
+    flex: 0 0 auto; 
+    padding: 15px 15px 10px 15px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    z-index: 20;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+#sidebar-content {
+    flex: 1 1 auto; 
+    overflow-y: auto; 
+    padding: 15px;
+    padding-bottom: 40px;
+}
+
+#dragger {
+    flex-grow: 0; flex-shrink: 0; flex-basis: 5px; height: 100%; cursor: col-resize;
+    background: #ccc; border-left: 1px solid #aaa; border-right: 1px solid #aaa; z-index: 10;
+}
+#dragger:hover { background: #aaa; }
+
+#map { flex: 1 1 auto; height: 100%; z-index: 0; }
+
+#sidebar h2 { margin-top: 0; }
+#sidebar-stats ul { list-style-type: none; padding-left: 0; }
+#sidebar-stats li { padding: 5px; border-bottom: 1px solid #eee; }
+
+/* MODIFICATION : STYLE NOIR ET BLANC */
+.danger-count {
+    font-size: 1.2em; 
+    font-weight: bold; 
+    color: #ffffff;      /* Blanc */
+    background: #000000; /* Noir */
+    padding: 10px; 
+    border-radius: 5px; 
+    text-align: center; 
+    margin: 15px 0;
+}
+
+#year-filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.year-btn {
+    background-color: #eee; border: 1px solid #ccc; padding: 5px 10px;
+    cursor: pointer; border-radius: 4px; font-size: 0.9em;
+}
+.year-btn:hover { background-color: #ddd; }
+
+/* MODIFICATION : STYLE NOIR ET BLANC */
+.year-btn.active-button {
+    background-color: #000000; /* Noir */
+    color: #ffffff;            /* Blanc */
+    border-color: #000000; 
+    font-weight: bold;
+}
+
+.date-filter-container {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+.date-filter-container label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+#date-search {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    background-color: #f9f9f9;
+    color: #333;
+}
+#date-search:focus {
+    outline: none;
+    border-color: #4CAF50;
+    background-color: #fff;
+}
+
+#histogram-legend {
+    margin-top: 15px; padding: 10px; background: #fff; border: 1px solid #eee;
+    border-radius: 4px; font-size: 0.9em;
+}
+.legend-title { font-weight: bold; margin-bottom: 5px; color: #333; }
+.legend-item { display: flex; align-items: center; margin-bottom: 3px; color: #555; }
+.legend-color {
+    display: inline-block; width: 15px; height: 15px; margin-right: 8px;
+    border-radius: 3px; border: 1px solid rgba(0,0,0,0.1);
+}
+
+.day-nav-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #ccc;
+}
+
+/* MODIFICATION : Navigation jours */
+.day-nav-btn {
+    background-color: #fff; 
+    border: 1px solid #000000; /* Bordure Noire */
+    color: #000000;            /* Texte Noir */
+    padding: 6px 12px; 
+    cursor: pointer; 
+    font-size: 0.85rem;
+    border-radius: 4px; 
+    transition: all 0.2s; 
+    font-weight: 600;
+}
+.day-nav-btn:hover:not(:disabled) { 
+    background-color: #333333; /* Assombrissement (Gris foncé/Noir) */
+    color: #ffffff;            /* Texte Blanc */
+}
+.day-nav-btn:disabled { border-color: #ccc; color: #ccc; cursor: not-allowed; }
+
+/* Modal & Légende Carte */
+#modal-backdrop {
+    display: none; position: fixed; z-index: 2000; left: 0; top: 0;
+    width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);
+    justify-content: center; align-items: center; 
+}
+#modal-content {
+    background-color: #fefefe; padding: 20px; border: 1px solid #888;
+    border-radius: 5px; width: 90%; max-width: 500px; position: relative;
+}
+#modal-close {
+    color: #aaa; position: absolute; top: 5px; right: 15px;
+    font-size: 28px; font-weight: bold; cursor: pointer;
+}
+.legend-icon {
+    display: inline-block; width: 12px; height: 12px; border-radius: 50%;
+    border: 2px solid white; box-shadow: 0 0 2px black; margin-right: 5px; vertical-align: middle;
+}
+.farm-legend { background-color: #A80C00; }
+.station-legend { background-color: #4CAF50; }
+.leaflet-control-layers-expanded {
+    background-color: rgba(255, 255, 255, 0.8); padding: 5px; border-radius: 4px;
+}
+
+
+/* =======================================================
+   6. NOUVEAU : PAGE "À PROPOS" / PROJET (FOND VIOLET)
+   ======================================================= */
+
+/* Fond violet global pour cette page spécifique */
+body.page-project {
+    background-color: #5840ff; /* Couleur violette/bleue de la maquette */
+    color: #000; /* Textes en noir */
+    overflow-y: auto; /* Autorise le scroll normal */
+    overflow-x: hidden;
+}
+
+/* Conteneur principal */
+.project-container {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    /* Important pour contenir la ligne SVG si elle dépasse un peu */
+    overflow: visible; 
+}
+
+/* --- STRUCTURE DES SECTIONS --- */
+.project-row {
+    display: flex;
+    align-items: flex-start; 
+    justify-content: space-between;
+    margin-bottom: 100px; /* Espace vertical entre les "étages" */
+    position: relative;
+    z-index: 2; /* Au-dessus de la ligne verte */
+
+}
+
+/* Modificateur pour inverser le sens (Image à gauche, Texte à droite) */
+.project-row.reverse {
+    flex-direction: row-reverse;
+}
+
+/* Colonne Texte */
+.col-text {
+    width: 45%;
+    padding: 20px;
+    color: #ffffff;
+}
+
+/* Colonne Image */
+.col-image {
+    width: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style des groupes d'images (PNG) */
+.img-cluster {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+}
+
+/* Typographie spécifique "À propos" */
+.col-text h2 {
+    font-weight: 900; 
+    font-size: 3rem;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    color: #ffffff;
+}
+
+.col-text p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.col-text small {
+    display: block;
+    margin-top: 15px;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* Alignement des textes */
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Cas spécifique pour la dernière section (Centrage vertical du bouton) */
+.project-row.last-row {
+    align-items: center; 
+    margin-bottom: 40px;
+}
+
+.centered-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Aligner bouton à droite */
+    justify-content: center;
+}
+
+/* --- BOUTON BLANC OVALE (Spécifique page projet) --- */
+.btn-oval-white {
+    display: inline-block;
+    background-color: #fff;
+    color: #000;
+    font-size: 1.2rem;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 20px;
+    border: 2px solid transparent;
+}
+
+.btn-oval-white:hover {
+    background-color: #000;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+
+/* --- LIGNE DE CONNEXION SVG --- */
+.svg-line-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Permet de cliquer à travers le SVG */
+    z-index: 1; /* Au-dessus du background (0) mais en dessous du contenu (2) */
+    overflow: visible;
+}
+
+#line-path {
+    stroke: #B6ff5f; /* Couleur demandée */
+    stroke-width: 4; /* Epaisseur de la ligne */
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* Petit effet d'ombre optionnel pour détacher la ligne du fond */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* On s'assure que le contenu texte/images passe AU-DESSUS de la ligne */
+.project-row {
+    position: relative;
+    z-index: 2; 
+}
+
+
+/* --- RESPONSIVE PAGE PROJET --- */
+@media (max-width: 900px) {
+    .project-row, .project-row.reverse {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 60px;
+    }
+
+    .col-text, .col-image {
+        width: 100%;
+        text-align: center; 
+    }
+    
+    .col-text { margin-bottom: 30px; }
+    
+    .centered-vertical { align-items: center; }
+    
+    .col-text h2 { font-size: 2rem; }
+}
+
+
+/* =======================================================
+   7. PAGES KIT ET ENQUETE
+   ======================================================= */
+
+   /* Fond violet global pour cette page spécifique */
+body.page-kit {
+    background-color: #5840ff; /* Couleur violette/bleue de la maquette */
+    color: #ffffff; /* Textes en noir */
+    overflow-y: auto; /* Autorise le scroll normal */
+    overflow-x: hidden;
+    max-width:800px; 
+    margin: 50px auto; 
+    text-align:center;
+}

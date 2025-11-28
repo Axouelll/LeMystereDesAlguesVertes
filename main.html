@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Le mystère des Algues Vertes</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-home">
+
+    <img src="image/main/2.png" alt="Algue verte" class="algae-decor">
+
+    <div id="menu-overlay"></div>
+
+    <div id="burger-menu">
+        <a href="main.html">Accueil</a>
+        <a href="articles.html">Lien des articles</a>
+        <a href="data.html">Accéder aux données</a>
+        <a href="enquete.html">Commencer l'enquête</a>
+        <a href="kit.html">Accéder au Kit</a>
+        <a href="apropos.html">À propos</a>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <button id="burger-btn" class="burger-btn" aria-label="Ouvrir le menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="main.html" class="nav-logo">Le mystère des Algues Vertes</a>
+        </div>
+    </nav>
+
+    <main id="home-grid">
+        <div class="quadrant"></div>
+
+        <div class="quadrant q-top-right">
+            <h1 class="main-title">
+                <span class="font-valnera-medium">Le mystère des</span>
+                <span class="font-valnera-italic">Algues Vertes</span>
+            </h1>
+        </div>
+
+        <div class="quadrant q-bottom-left">
+            <div class="button-group">
+                <a href="enquete.html" class="btn-action btn-white">Commencer l'enquête</a>
+                <a href="kit.html" class="btn-action btn-white">Récupérer le kit</a>
+                <a href="apropos.html" class="btn-action btn-black">En savoir plus</a>
+            </div>
+        </div>
+
+        <div class="quadrant"></div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

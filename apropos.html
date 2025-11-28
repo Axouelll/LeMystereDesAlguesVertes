@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Projet - Le mystère des Algues Vertes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-project">
+    <div id="menu-overlay"></div>
+    <div id="burger-menu">
+        <a href="main.html">Accueil</a>
+        <a href="articles.html">Lien des articles</a>
+        <a href="data.html">Accéder aux données</a>
+        <a href="enquete.html">Commencer l'enquête</a>
+        <a href="kit.html">Accéder au Kit</a>
+        <a href="apropos.html">À propos</a>
+    </div>
+    <nav>
+        <div class="nav-container">
+            <button id="burger-btn" class="burger-btn" aria-label="Ouvrir le menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="main.html" class="nav-logo">Le mystère des Algues Vertes</a>
+        </div>
+    </nav>
+
+    <main class="project-container">
+        
+        <svg class="svg-line-container">
+            <polyline id="line-path" points=""></polyline>
+        </svg>
+
+        <section class="project-row">
+            <div class="col-text text-left">
+                <h2>Le projet ?</h2>
+                <p>
+                    Le Mystère des Algues Vertes est un jeu de piste pédagogique conçu pour sensibiliser les jeunes de 15 à 25 ans au phénomène des marées vertes en Bretagne. Le dispositif mêle enquête numérique, disponible sur notre site internet, et manipulation d’un kit papier téléchargeable en open source. Les participants y mènent une investigation guidée par des indices, des cartes et des données réelles, afin de comprendre l’origine de la prolifération des algues vertes et ses conséquences sur l’environnement, la santé et la vie locale.
+                    <br><br>
+                    <small>Pensé pour être utilisé en autonomie ou en classe, le projet offre une expérience à la fois ludique, immersive et scientifique.</small>
+                </p>
+            </div>
+            <div class="col-image">
+                <img id="img-1" src="image/apropos/1.png" alt="Visuels du projet" class="img-cluster">
+            </div>
+        </section>
+
+        <section class="project-row reverse">
+            <div class="col-text text-right">
+                <h2>Une initiative d’Eau et Rivières de Bretagne</h2>
+                <p>
+                    Ce dispositif est porté par Eau & Rivières de Bretagne, association régionale reconnue pour son engagement historique en faveur de la protection de l’eau et des milieux aquatiques. Depuis plus de cinquante ans, l’association mène des actions de sensibilisation, d’éducation à l’environnement et de défense des usagers.
+                    <br><br>
+                    À travers ce jeu, elle souhaite proposer un outil pédagogique accessible, permettant aux jeunes publics de mieux comprendre un phénomène complexe, tout en stimulant l’esprit critique et la participation citoyenne.
+                </p>
+            </div>
+
+            <div class="col-image">
+                <img id="img-2" src="image/apropos/2.png" alt="Manifestation écologiste" class="img-cluster">
+            </div>
+            
+        </section>
+
+        <section class="project-row">
+            <div class="col-text text-left">
+                <h2>Le contexte ?</h2>
+                <p>
+                    Depuis les années 1970, la Bretagne fait face à des échouages massifs d’algues vertes, causés notamment par des apports excessifs de nitrates issus de pratiques agricoles intensives. Ces marées vertes représentent un enjeu environnemental et sanitaire majeur : elles affectent les écosystèmes littoraux, fragilisent l’économie touristique et peuvent présenter des risques pour la santé humaine lors de leur décomposition.
+                    <br><br>
+                    Dans ce contexte, il apparaît essentiel de proposer des outils permettant aux jeunes de comprendre les mécanismes de ce phénomène, de visualiser son impact sur leur territoire et d’identifier les enjeux sociaux, économiques et environnementaux qui y sont liés.
+                </p>
+            </div>
+            <div class="col-image">
+                <img id="img-3" src="image/apropos/3.png" alt="Algues vertes sur la cote" class="img-cluster">
+            </div>
+        </section>
+
+        <section class="project-row reverse last-row">
+            
+            <div class="col-text text-right centered-vertical">
+                <h2>Nos ressources</h2>
+                <a href="articles.html" class="btn-oval-white">accéder aux ressources</a>
+            </div>
+
+            <div class="col-image">
+                <img id="img-4" src="image/apropos/4.png" alt="Carte des données" class="img-cluster">
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+    
+    <script>
+        function drawLine() {
+            const svgLine = document.getElementById('line-path');
+            const container = document.querySelector('.project-container');
+            const images = [
+                document.getElementById('img-1'),
+                document.getElementById('img-2'),
+                document.getElementById('img-3'),
+                document.getElementById('img-4')
+            ];
+
+            if (!container || images.some(img => !img)) return;
+
+            const containerRect = container.getBoundingClientRect();
+            let points = "";
+
+            images.forEach(img => {
+                const rect = img.getBoundingClientRect();
+                // Calcul du centre relatif au conteneur
+                const x = (rect.left + rect.width / 2) - containerRect.left;
+                const y = (rect.top + rect.height / 2) - containerRect.top;
+                points += `${x},${y} `;
+            });
+
+            svgLine.setAttribute('points', points.trim());
+        }
+
+        // Dessiner au chargement et au redimensionnement
+        window.addEventListener('load', drawLine);
+        window.addEventListener('resize', drawLine);
+        // Au cas où les images chargent lentement
+        setTimeout(drawLine, 500);
+        setTimeout(drawLine, 1000);
+    </script>
+</body>
+</html>
